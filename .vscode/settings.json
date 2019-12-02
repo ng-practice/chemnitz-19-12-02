@@ -1,0 +1,4 @@
+{
+  "tslint.alwaysShowRuleFailuresAsWarnings": false,
+  "tslint.packageManager": "yarn"
+}
