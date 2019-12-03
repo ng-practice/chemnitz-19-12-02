@@ -5,14 +5,15 @@ import { Todo } from '../models/todo';
   providedIn: 'root'
 })
 export class TodosInMemoryService {
-  private todos: Todo[] = [{
-    text: 'write an app',
-    isDone: false
-  },
-  {
-    text: 'buy milk',
-    isDone: false
-  }
+  private todos: Todo[] = [
+    {
+      text: 'write an app',
+      isDone: false
+    },
+    {
+      text: 'buy milk',
+      isDone: false
+    }
   ];
 
   getAll() {
@@ -30,16 +31,10 @@ export class TodosInMemoryService {
     });
   }
 
-  getAllDone(): Todo[] {
-    return this.todos.filter(todo => todo.isDone);
-  }
-
-  delete(todoDelete: Todo) {
+  delete(todoDelete: Todo): void {
     this.todos.splice(
-      this.todos.indexOf(
-        this.todos.find(todo =>
-          todo.text === todoDelete.text
-        )
-      ), 1);
+      this.todos.findIndex(todo => todo.text === todoDelete.text),
+      1
+    );
   }
 }

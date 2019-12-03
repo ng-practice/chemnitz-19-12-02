@@ -1,5 +1,9 @@
 <!-- todo-quick-add.component.html -->
-<input #inputElement type="text" class="todo__input" placeholder="What needs to be done?"
+<input
+  #inputElement
+  type="text"
+  class="todo__input"
+  placeholder="What needs to be done?"
   (keydown.enter)="emitCreate(inputElement)" />
 
 <button (click)="emitCreate(inputElement)" class="todo__button--primary">
