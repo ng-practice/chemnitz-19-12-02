@@ -1,11 +1,11 @@
 <div class="todo">
   <label class="todo__label">
-    {{ todo.text }}
+    <ng-content></ng-content>{{ todo.text }}
     <input [checked]="todo.isDone" (change)="toggleChecked()" type="checkbox" />
     <span class="todo__checkmark"></span>
   </label>
-  <span 
-    class="todo__delete" 
+  <span
+    class="todo__delete"
     (click)="deleteTodo()">
   </span>
 </div>

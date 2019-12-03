@@ -1,21 +1,25 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'wsd-todo-quick-add',
   templateUrl: './todo-quick-add.component.html',
   styleUrls: ['./todo-quick-add.component.scss']
 })
-export class TodoQuickAddComponent implements OnInit {
+export class TodoQuickAddComponent {
 
   @Output() create: EventEmitter<string> = new EventEmitter();
-  constructor() { }
 
-  ngOnInit() {
-  }
+  addFormGroup: FormGroup = new FormGroup({
+    text: new FormControl('', [Validators.required])
+  });
 
-  emitCreate(input: HTMLInputElement) {
-    this.create.emit(input.value)
-    input.value = '';
+  emitCreate() {
+    if (this.addFormGroup.invalid) { return; }
+    this.create.emit(
+      this.addFormGroup.value.text
+    );
+    this.addFormGroup.reset();
   }
 
 }

@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Todo } from '../models/todo';
+import { TodosBaseService } from './todos-base.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TodosInMemoryService {
+@Injectable(
+  // {providedIn: 'root'}
+)
+export class TodosInMemoryService
+  extends TodosBaseService {
   private todos: Todo[] = [
     {
       text: 'write an app',
@@ -16,25 +19,24 @@ export class TodosInMemoryService {
     }
   ];
 
-  getAll() {
-    return this.todos;
+  query(): Observable<Todo[]> {
+    return of(this.todos);
   }
 
-  toggle(index: number): void {
-    this.todos[index].isDone = !this.todos[index].isDone;
+  // toggle(index: number): void {
+  //   this.todos[index].isDone = !this.todos[index].isDone;
+  // }
+
+  add(newTodo: Todo): Observable<Todo[]> {
+    this.todos.push(newTodo);
+    return of(this.todos);
   }
 
-  addTodo(text: string): void {
-    this.todos.push({
-      isDone: false,
-      text
-    });
-  }
-
-  delete(todoDelete: Todo): void {
-    this.todos.splice(
-      this.todos.findIndex(todo => todo.text === todoDelete.text),
-      1
-    );
-  }
+  // delete(todoDelete: Todo): void {
+  //   this.todos.splice(
+  //     this.todos.findIndex(todo => todo.text === todoDelete.text),
+  //     1
+  //   );
+  //   // this.todos.filter(todo =>  todoDelete.text !== todoDelete.text);
+  // }
 }

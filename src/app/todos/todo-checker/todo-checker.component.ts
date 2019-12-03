@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Todo } from '../models/todo';
 
 @Component({
@@ -6,18 +6,13 @@ import { Todo } from '../models/todo';
   templateUrl: './todo-checker.component.html',
   styleUrls: ['./todo-checker.component.scss']
 })
-export class TodoCheckerComponent implements OnInit {
+export class TodoCheckerComponent {
   @Input() todo: Todo;
   @Output() emitToggle: EventEmitter<void> = new EventEmitter();
   @Output() emitDelete: EventEmitter<Todo> = new EventEmitter();
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   toggleChecked() {
     this.emitToggle.emit();
-    // this.todo.isDone = !this.todo.isDone;
   }
 
   deleteTodo() {

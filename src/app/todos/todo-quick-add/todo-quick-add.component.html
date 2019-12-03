@@ -1,11 +1,28 @@
 <!-- todo-quick-add.component.html -->
+<form [formGroup]="addFormGroup">
 <input
-  #inputElement
+  formControlName="text"
   type="text"
   class="todo__input"
   placeholder="What needs to be done?"
-  (keydown.enter)="emitCreate(inputElement)" />
+  (keydown.enter)="emitCreate()" />
+<button
+  [disabled]="addFormGroup.invalid"
+  type="button"
+  (click)="emitCreate()"
+  class="todo__button--primary"
+  >
+  Add </button>
+  <div
+    *ngIf="addFormGroup.invalid &&
+     (addFormGroup.touched ||
+     addFormGroup.dirty)"
+     ;else anderesTemplate
 
-<button (click)="emitCreate(inputElement)" class="todo__button--primary">
-  Add
-</button>
+  >
+  Validierungsfehler
+  </div>
+  <ng-template #andersTemplate>
+      <div>Keine Validierungsfehler</div>
+  </ng-template>
+</form>

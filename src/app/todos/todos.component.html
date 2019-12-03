@@ -1,8 +1,10 @@
 <wsd-todo-quick-add (create)="addTodo($event)">
 </wsd-todo-quick-add>
-<wsd-todo-checker 
-  *ngFor="let todoInput of todos; index as i" 
-  [todo]="todoInput" 
+<wsd-todo-checker
+  *ngFor="let todoInput of (todos$ | async)
+  ; index as i"
+  [todo]="todoInput"
   (emitToggle)="toggle(i)"
   (emitDelete)="deleteTodo($event)">
+  {{index(i)+'. '}}
 </wsd-todo-checker>
