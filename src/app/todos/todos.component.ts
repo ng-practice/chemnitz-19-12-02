@@ -17,6 +17,7 @@ export class TodosComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) { }
 
+
   index(i: any): number {
     return i + 1;
   }

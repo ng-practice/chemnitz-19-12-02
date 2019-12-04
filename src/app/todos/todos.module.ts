@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { UiComponentsModule } from '../ui-components/ui-components.module';
 import { TodosApiService } from './shared/todos-api.service';
 import { TodosBaseService } from './shared/todos-base.service';
 import { TodosInMemoryService } from './shared/todos-in-memory.service';
@@ -23,7 +24,8 @@ import { TodosComponent } from './todos.component';
     CommonModule,
     TodosRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UiComponentsModule,
   ],
   providers: [
     {
