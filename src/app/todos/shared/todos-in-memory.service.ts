@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Todo } from '../models/todo';
 import { TodosBaseService } from './todos-base.service';
 
@@ -19,30 +19,37 @@ export class TodosInMemoryService
     }
   ];
 
-  query(query: string = 'all'): Observable<Todo[]> {
-    if (query === 'all' || !query) {
-      return of(this.todos);
+  private stream$$ = new BehaviorSubject<Todo[]>(this.todos);
+
+  todos$ = this.stream$$.asObservable();
+  activeFilter: string;
+
+  query(query?: string) {
+    this.activeFilter = query ? query : this.activeFilter;
+    if (this.activeFilter === 'all' || !this.activeFilter) {
+      this.stream$$.next(this.todos);
+    } else {
+      this.stream$$.next(this.todos.filter(todo =>
+        todo.isDone === (this.activeFilter === 'complete' ? true : false)
+      ));
     }
-    return of(this.todos.filter(todo =>
-      todo.isDone === (query === 'complete' ? true : false)
-    ));
   }
 
-  toggle(todo: Todo): Observable<Todo[]> {
+  toggle(todo: Todo): void {
     this.todos[this.todos.indexOf(todo)].isDone = !todo.isDone;
-    return of(this.todos);
+    this.query();
   }
 
-  add(newTodo: Todo): Observable<Todo[]> {
+  add(newTodo: Todo): void {
     this.todos.push(newTodo);
-    return of(this.todos);
+    this.query();
   }
 
-  delete(todoDelete: Todo): Observable<Todo[]> {
+  delete(todoDelete: Todo): void {
     this.todos.splice(
       this.todos.findIndex(todo => todo.text === todoDelete.text),
       1
     );
-    return of(this.todos);
+    this.query();
   }
 }

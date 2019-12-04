@@ -16,13 +16,12 @@
   <div
     *ngIf="addFormGroup.invalid &&
      (addFormGroup.touched ||
-     addFormGroup.dirty)"
-     ;else anderesTemplate
+     addFormGroup.dirty); else anderesTemplate"
 
   >
   Validierungsfehler
   </div>
-  <ng-template #andersTemplate>
+  <ng-template #anderesTemplate>
       <div>Keine Validierungsfehler</div>
   </ng-template>
 </form>

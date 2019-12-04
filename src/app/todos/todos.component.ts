@@ -15,7 +15,9 @@ export class TodosComponent implements OnInit {
   constructor(
     private todosService: TodosBaseService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.todos$ = todosService.todos$;
+  }
 
   index(i: any): number {
     return i + 1;
@@ -23,7 +25,7 @@ export class TodosComponent implements OnInit {
 
   ngOnInit(): void {
     this.sink.add(this.activatedRoute.paramMap.subscribe(map => {
-      this.todos$ = this.todosService.query(map.get('query'));
+      this.todosService.query(map.get('query'));
     }));
     // this.sink.add(this.todosService.query()
     //   .subscribe(todosFromApi => this.todos = todosFromApi));
@@ -31,7 +33,7 @@ export class TodosComponent implements OnInit {
 
   addTodo(text: string): void {
     const todo: Todo = { text, isDone: false };
-    this.todos$ = this.todosService.add(todo);
+    this.todosService.add(todo);
     // const todo: Todo = { text, isDone: false };
     // this.sink.add(this.todosService.add(todo).subscribe(newTodos => {
     //   this.todos = newTodos;
@@ -39,11 +41,11 @@ export class TodosComponent implements OnInit {
   }
 
   deleteTodo(todo: Todo) {
-    this.todos$ = this.todosService.delete(todo);
+    this.todosService.delete(todo);
   }
 
   toggle(todo: Todo) {
-    this.todos$ = this.todosService.toggle(todo);
+    this.todosService.toggle(todo);
     // this.todosService.toggle(index)
   }
 

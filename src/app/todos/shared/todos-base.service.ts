@@ -3,13 +3,15 @@ import { Todo } from '../models/todo';
 
 export abstract class TodosBaseService {
 
+  abstract todos$: Observable<Todo[]>;
+
   abstract query(
     query?: string
-  ): Observable<Todo[]>;
+  ): void;
 
-  abstract add(newTodo: Todo): Observable<Todo[]>;
+  abstract add(newTodo: Todo): void;
 
-  abstract toggle(todo: Todo): Observable<Todo[]>;
+  abstract toggle(todo: Todo): void;
 
-  abstract delete(todo: Todo): Observable<Todo[]>;
+  abstract delete(todo: Todo): void;
 }
