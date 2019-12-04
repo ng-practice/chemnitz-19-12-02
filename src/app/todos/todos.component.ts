@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { Todo } from './models/todo';
 import { TodosBaseService } from './shared/todos-base.service';
 
@@ -10,9 +11,10 @@ import { TodosBaseService } from './shared/todos-base.service';
 })
 export class TodosComponent implements OnInit {
   todos$: Observable<Todo[]>;
-  // sink: Subscription = new Subscription();
+  sink: Subscription = new Subscription();
   constructor(
-    private todosService: TodosBaseService
+    private todosService: TodosBaseService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   index(i: any): number {
@@ -20,7 +22,9 @@ export class TodosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.todos$ = this.todosService.query();
+    this.sink.add(this.activatedRoute.paramMap.subscribe(map => {
+      this.todos$ = this.todosService.query(map.get('query'));
+    }));
     // this.sink.add(this.todosService.query()
     //   .subscribe(todosFromApi => this.todos = todosFromApi));
   }
@@ -35,10 +39,11 @@ export class TodosComponent implements OnInit {
   }
 
   deleteTodo(todo: Todo) {
-    // this.todosService.delete(todo);
+    this.todos$ = this.todosService.delete(todo);
   }
 
-  toggle(index: number) {
+  toggle(todo: Todo) {
+    this.todos$ = this.todosService.toggle(todo);
     // this.todosService.toggle(index)
   }
 

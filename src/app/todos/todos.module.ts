@@ -8,16 +8,20 @@ import { TodosBaseService } from './shared/todos-base.service';
 import { TodosInMemoryService } from './shared/todos-in-memory.service';
 import { TodoCheckerComponent } from './todo-checker/todo-checker.component';
 import { TodoQuickAddComponent } from './todo-quick-add/todo-quick-add.component';
+import { TodosLinkNavigationComponent } from './todos-link-navigation/todos-link-navigation.component';
+import { TodosRoutingModule } from './todos-routing.module';
 import { TodosComponent } from './todos.component';
 
 @NgModule({
   declarations: [
     TodoCheckerComponent,
     TodosComponent,
-    TodoQuickAddComponent
+    TodoQuickAddComponent,
+    TodosLinkNavigationComponent
   ],
   imports: [
     CommonModule,
+    TodosRoutingModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
@@ -27,8 +31,8 @@ import { TodosComponent } from './todos.component';
         TodosBaseService,
       useClass:
         environment.production ?
-          TodosApiService :
-          TodosInMemoryService
+          TodosInMemoryService :
+          TodosApiService
     }
   ],
   exports: [

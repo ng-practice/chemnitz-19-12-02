@@ -19,24 +19,30 @@ export class TodosInMemoryService
     }
   ];
 
-  query(): Observable<Todo[]> {
-    return of(this.todos);
+  query(query: string = 'all'): Observable<Todo[]> {
+    if (query === 'all' || !query) {
+      return of(this.todos);
+    }
+    return of(this.todos.filter(todo =>
+      todo.isDone === (query === 'complete' ? true : false)
+    ));
   }
 
-  // toggle(index: number): void {
-  //   this.todos[index].isDone = !this.todos[index].isDone;
-  // }
+  toggle(todo: Todo): Observable<Todo[]> {
+    this.todos[this.todos.indexOf(todo)].isDone = !todo.isDone;
+    return of(this.todos);
+  }
 
   add(newTodo: Todo): Observable<Todo[]> {
     this.todos.push(newTodo);
     return of(this.todos);
   }
 
-  // delete(todoDelete: Todo): void {
-  //   this.todos.splice(
-  //     this.todos.findIndex(todo => todo.text === todoDelete.text),
-  //     1
-  //   );
-  //   // this.todos.filter(todo =>  todoDelete.text !== todoDelete.text);
-  // }
+  delete(todoDelete: Todo): Observable<Todo[]> {
+    this.todos.splice(
+      this.todos.findIndex(todo => todo.text === todoDelete.text),
+      1
+    );
+    return of(this.todos);
+  }
 }
