@@ -82,12 +82,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -124,6 +123,36 @@
           }
         }
       }
-    }},
+    },
+    "domeba-e2e": {
+      "root": "domeba-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "domeba-e2e/cypress.json",
+            "tsConfig": "domeba-e2e/tsconfig.e2e.json",
+            "devServerTarget": "domeba:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "domeba:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "domeba-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "defaultProject": "domeba"
 }
